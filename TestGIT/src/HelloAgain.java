@@ -5,11 +5,9 @@ public class HelloAgain {
 		System.out.println("Hello Again");
 		System.out.println("Hello Again");
 		System.out.println("Hello Again");
-<<<<<<< HEAD
-		
-=======
+
 		System.out.println("Hello Again");
->>>>>>> branch 'master' of https://github.com/AJKlaholz/TestGIT.git
+
 	}
 
 }
