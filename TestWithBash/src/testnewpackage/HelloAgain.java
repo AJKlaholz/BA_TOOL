@@ -1,3 +1,4 @@
+package testnewpackage;
 
 public class HelloAgain {
 
