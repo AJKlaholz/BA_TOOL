@@ -6,6 +6,7 @@ public class HelloAgain {
 		System.out.println("Hello Again");
 		
 		System.out.println("Und du geht das auch so?");
+		System.out.println("Und du geht das auch so?");
 
 	}
 
