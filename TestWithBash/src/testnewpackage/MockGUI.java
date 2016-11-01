@@ -23,11 +23,37 @@ public class MockGUI extends JFrame implements ActionListener {
 		knopf.setText("Save");
 		knopf2.setText("Load");
 		knopf3.setText("Delete");
-		knopf.addActionListener(this);
-		knopf2.addActionListener(this);
-		knopf3.addActionListener(this);
+		knopf.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent ev){
+			JFrame f = new JFrame();
+			JLabel sB = new JLabel("Object was saved");
+			f.add(sB);
+			f.pack();
+			f.setVisible(true);	
+			}
+		});
+	
+		knopf2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev){
+				JFrame f = new JFrame();
+				JLabel sB = new JLabel("Object was loaded");
+				f.add(sB);
+				f.pack();
+				f.setVisible(true);	
+				}
+			});
+		knopf3.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev){
+				JFrame f = new JFrame();
+				JLabel sB = new JLabel("Object was deleted");
+				f.add(sB);
+				f.pack();
+				f.setVisible(true);	
+				}
+			});
 		this.add(knopf);
 		this.add(knopf2);
+		this.add(knopf3);
 		this.pack();
 		this.setVisible(true);
 		
@@ -38,15 +64,29 @@ public class MockGUI extends JFrame implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/*@Override
+	public void actionPerformed(ActionEvent a) {
 		JFrame f = new JFrame();
+		JLabel sB = null;
 		f.setTitle("Message");
-		f.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		JLabel jl = new JLabel("Object was saved");
-		f.add(jl);
+		if(a.equals(knopf)){
+			sB = new JLabel("Object was saved");
+
+		}else if(a.equals(knopf2)){
+			sB = new JLabel("Object was loaded");
+			
+		}else if(a.equals(knopf3)){
+			sB = new JLabel("Objekt was deleted");
+		}
+		f.add(sB);
 		f.pack();
 		f.setVisible(true);
 		
-	}
+	}*/
 
 }
