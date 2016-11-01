@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 public class MockGUI extends JFrame implements ActionListener {
 	private JLabel text = new JLabel();
 	private JButton knopf = new JButton();
+	private JButton knopf2 = new JButton();
+	private JButton knopf3 = new JButton();
 	
 	public MockGUI(){
 		this.setTitle("Mockup GUI");
@@ -19,8 +21,13 @@ public class MockGUI extends JFrame implements ActionListener {
 		this.setLayout(new FlowLayout());
 		
 		knopf.setText("Save");
+		knopf2.setText("Load");
+		knopf3.setText("Delete");
 		knopf.addActionListener(this);
+		knopf2.addActionListener(this);
+		knopf3.addActionListener(this);
 		this.add(knopf);
+		this.add(knopf2);
 		this.pack();
 		this.setVisible(true);
 		
