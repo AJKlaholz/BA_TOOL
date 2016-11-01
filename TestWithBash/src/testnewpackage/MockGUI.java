@@ -1,4 +1,5 @@
 package testnewpackage;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +18,7 @@ public class MockGUI extends JFrame implements ActionListener {
 		this.setTitle("Mockup GUI");
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
+		this.setPreferredSize(new Dimension(200,100));
 		this.setLayout(new FlowLayout());
 		
 		knopf.setText("Save");
