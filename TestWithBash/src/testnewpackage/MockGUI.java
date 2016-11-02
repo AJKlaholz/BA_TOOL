@@ -16,6 +16,8 @@ public class MockGUI extends JFrame implements ActionListener {
 	private JButton saveb = new JButton();
 	private JButton loadb = new JButton();
 	private JButton deleteb = new JButton();
+	private JButton downloadb = new JButton();
+	private JButton resultb = new JButton();
 
 	
 	public MockGUI(){
@@ -28,10 +30,14 @@ public class MockGUI extends JFrame implements ActionListener {
 		saveb.setText("Save");
 		loadb.setText("Load");
 		deleteb.setText("Delete");
+		downloadb.setText("Download");
+		resultb.setText("Result");
 		
 		saveb.setBounds(20, 300, 100, 30);
 		loadb.setBounds(140, 300, 100, 30);
 		deleteb.setBounds(260, 300, 100, 30);
+		downloadb.setBounds(500, 300, 100, 30);
+		resultb.setBounds(620, 300, 100, 30);
 		
 		
 		saveb.addActionListener(new ActionListener(){
@@ -77,12 +83,14 @@ public class MockGUI extends JFrame implements ActionListener {
 		*/
 		
 		
-		addingTextfields(this);
+		addingTextfieldsandLabels(this);
 		
 		
 		this.add(saveb);
 		this.add(loadb);
 		this.add(deleteb);
+		this.add(downloadb);
+		this.add(resultb);
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -99,50 +107,33 @@ public class MockGUI extends JFrame implements ActionListener {
 		
 	}
 
-	/*@Override
-	public void actionPerformed(ActionEvent a) {
-		JFrame f = new JFrame();
-		JLabel sB = null;
-		f.setTitle("Message");
-		if(a.equals(knopf)){
-			sB = new JLabel("Object was saved");
-
-		}else if(a.equals(knopf2)){
-			sB = new JLabel("Object was loaded");
-			
-		}else if(a.equals(knopf3)){
-			sB = new JLabel("Objekt was deleted");
-		}
-		f.add(sB);
-		f.pack();
-		f.setVisible(true);
-		
-	}*/
 	
-	public void addingTextfields(JFrame jf){
+	
+	//adding an array of JTextFields to a JFrame
+	public void addingTextfieldsandLabels(JFrame jf){
 		JTextField[] fieldList = new JTextField[8];
+		JLabel[] jl = new JLabel[8];
 		int y=10;
 		
 		for(int i=0;i<fieldList.length;i++){
-			//fieldList[i].setColumns(30);
+			if(i==0){
+				jl[i] = new JLabel("Record:"); 
+			}else{
+				jl[i] = new JLabel("Searchterm:");
+			}
+			
 			fieldList[i] = new JTextField(30);
 			jf.add(fieldList[i]);
-			fieldList[i].setBounds(10, y, 80, 20);
+			jf.add(jl[i]);
+			fieldList[i].setBounds(100, y, 150, 20);
+			jl[i].setBounds(10, y, 100, 20);
 			
-			y=y+20;
+			y=y+30;
 			
-			fieldList[i].setVisible(true);
-			fieldList[i].addActionListener(this);
+			
 			
 			
 		}
 	}
-	/*
-	 * 		JTextField jt = new JTextField(30);
-		//this.getContentPane().add(jt);
-		this.add(jt);
-		  jt.setBounds(10,10,80,30);
-	      jt.setVisible(true);
-	      jt.addActionListener(this);
-	 */
+
 }
