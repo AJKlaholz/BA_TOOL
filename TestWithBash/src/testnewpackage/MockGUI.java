@@ -18,18 +18,24 @@ public class MockGUI extends JFrame implements ActionListener {
 		this.setTitle("Mockup GUI");
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setPreferredSize(new Dimension(200,100));
+		this.setPreferredSize(new Dimension(800,400));
 		this.setLayout(new FlowLayout());
+		
 		
 		knopf.setText("Save");
 		knopf2.setText("Load");
 		knopf3.setText("Delete");
+		
+		knopf.setBounds(20, 70, 200, 100);
+		
+		
 		knopf.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent ev){
 			JFrame f = new JFrame();
 			JLabel sB = new JLabel("Object was saved");
 			f.add(sB);
 			f.pack();
+			f.setLocationRelativeTo(null);
 			f.setVisible(true);	
 			}
 		});
@@ -40,6 +46,7 @@ public class MockGUI extends JFrame implements ActionListener {
 				JLabel sB = new JLabel("Object was loaded");
 				f.add(sB);
 				f.pack();
+				f.setLocationRelativeTo(null);
 				f.setVisible(true);	
 				}
 			});
@@ -49,13 +56,16 @@ public class MockGUI extends JFrame implements ActionListener {
 				JLabel sB = new JLabel("Object was deleted");
 				f.add(sB);
 				f.pack();
+				f.setLocationRelativeTo(null);
 				f.setVisible(true);	
 				}
 			});
+		this.setLayout(null);
 		this.add(knopf);
 		this.add(knopf2);
 		this.add(knopf3);
 		this.pack();
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		
 	}
