@@ -3,16 +3,20 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class MockGUI extends JFrame implements ActionListener {
-	private JLabel text = new JLabel();
-	private JButton knopf = new JButton();
-	private JButton knopf2 = new JButton();
-	private JButton knopf3 = new JButton();
+	private JButton saveb = new JButton();
+	private JButton loadb = new JButton();
+	private JButton deleteb = new JButton();
+
 	
 	public MockGUI(){
 		this.setTitle("Mockup GUI");
@@ -21,15 +25,16 @@ public class MockGUI extends JFrame implements ActionListener {
 		this.setPreferredSize(new Dimension(800,400));
 		this.setLayout(new FlowLayout());
 		
+		saveb.setText("Save");
+		loadb.setText("Load");
+		deleteb.setText("Delete");
 		
-		knopf.setText("Save");
-		knopf2.setText("Load");
-		knopf3.setText("Delete");
-		
-		knopf.setBounds(20, 70, 200, 100);
+		saveb.setBounds(20, 300, 100, 30);
+		loadb.setBounds(140, 300, 100, 30);
+		deleteb.setBounds(260, 300, 100, 30);
 		
 		
-		knopf.addActionListener(new ActionListener(){
+		saveb.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent ev){
 			JFrame f = new JFrame();
 			JLabel sB = new JLabel("Object was saved");
@@ -40,7 +45,7 @@ public class MockGUI extends JFrame implements ActionListener {
 			}
 		});
 	
-		knopf2.addActionListener(new ActionListener(){
+		loadb.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
 				JFrame f = new JFrame();
 				JLabel sB = new JLabel("Object was loaded");
@@ -50,7 +55,7 @@ public class MockGUI extends JFrame implements ActionListener {
 				f.setVisible(true);	
 				}
 			});
-		knopf3.addActionListener(new ActionListener(){
+		deleteb.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
 				JFrame f = new JFrame();
 				JLabel sB = new JLabel("Object was deleted");
@@ -60,10 +65,24 @@ public class MockGUI extends JFrame implements ActionListener {
 				f.setVisible(true);	
 				}
 			});
+		
+		
 		this.setLayout(null);
-		this.add(knopf);
-		this.add(knopf2);
-		this.add(knopf3);
+	/*	JTextField jt = new JTextField(30);
+		//this.getContentPane().add(jt);
+		this.add(jt);
+		  jt.setBounds(10,10,80,30);
+	      jt.setVisible(true);
+	      jt.addActionListener(this);
+		*/
+		
+		
+		addingTextfields(this);
+		
+		
+		this.add(saveb);
+		this.add(loadb);
+		this.add(deleteb);
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -99,5 +118,31 @@ public class MockGUI extends JFrame implements ActionListener {
 		f.setVisible(true);
 		
 	}*/
-
+	
+	public void addingTextfields(JFrame jf){
+		JTextField[] fieldList = new JTextField[8];
+		int y=10;
+		
+		for(int i=0;i<fieldList.length;i++){
+			//fieldList[i].setColumns(30);
+			fieldList[i] = new JTextField(30);
+			jf.add(fieldList[i]);
+			fieldList[i].setBounds(10, y, 80, 20);
+			
+			y=y+20;
+			
+			fieldList[i].setVisible(true);
+			fieldList[i].addActionListener(this);
+			
+			
+		}
+	}
+	/*
+	 * 		JTextField jt = new JTextField(30);
+		//this.getContentPane().add(jt);
+		this.add(jt);
+		  jt.setBounds(10,10,80,30);
+	      jt.setVisible(true);
+	      jt.addActionListener(this);
+	 */
 }
