@@ -7,6 +7,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ public class MockGUI extends JFrame implements ActionListener {
 	private JButton deleteb = new JButton();
 	private JButton downloadb = new JButton();
 	private JButton resultb = new JButton();
+	private JComboBox cm = new JComboBox();
 	
 	private ArrayList<Record> listofrec = new ArrayList<Record>();
 	
@@ -40,17 +42,22 @@ public class MockGUI extends JFrame implements ActionListener {
 		
 		saveb.setBounds(20, 300, 100, 30);
 		loadb.setBounds(140, 300, 100, 30);
-		deleteb.setBounds(260, 300, 100, 30);
+		deleteb.setBounds(380, 300, 100, 30);
 		downloadb.setBounds(500, 300, 100, 30);
 		resultb.setBounds(620, 300, 100, 30);
-		
+		cm.setBounds(260, 300, 100, 30);
 		
 		saveb.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent ev){
+			
 			Record tmp = new Record();
 			tmp.setName(fieldList[0].getText());
 			System.out.println(fieldList[0].getText());
 			listofrec.add(tmp);
+			
+			//add Object to JComboBox
+			cm.addItem(fieldList[0].getText());
+			
 			
 			
 			
@@ -107,6 +114,7 @@ public class MockGUI extends JFrame implements ActionListener {
 		this.add(deleteb);
 		this.add(downloadb);
 		this.add(resultb);
+		this.add(cm);
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
