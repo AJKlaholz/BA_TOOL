@@ -18,6 +18,11 @@ public class MockGUI extends JFrame implements ActionListener {
 	private JButton deleteb = new JButton();
 	private JButton downloadb = new JButton();
 	private JButton resultb = new JButton();
+	
+	private ArrayList<Record> listofrec = new ArrayList<Record>();
+	
+	JTextField[] fieldList = new JTextField[8];
+	JLabel[] jl = new JLabel[8];
 
 	
 	public MockGUI(){
@@ -42,6 +47,13 @@ public class MockGUI extends JFrame implements ActionListener {
 		
 		saveb.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent ev){
+			Record tmp = new Record();
+			tmp.setName(fieldList[0].getText());
+			System.out.println(fieldList[0].getText());
+			listofrec.add(tmp);
+			
+			
+			
 			JFrame f = new JFrame();
 			JLabel sB = new JLabel("Object was saved");
 			f.add(sB);
@@ -53,6 +65,10 @@ public class MockGUI extends JFrame implements ActionListener {
 	
 		loadb.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
+				for(int i=0;i<listofrec.size();i++){
+				System.out.println(listofrec.get(i).getName());
+				}
+				
 				JFrame f = new JFrame();
 				JLabel sB = new JLabel("Object was loaded");
 				f.add(sB);
@@ -83,7 +99,7 @@ public class MockGUI extends JFrame implements ActionListener {
 		*/
 		
 		
-		addingTextfieldsandLabels(this);
+		addingTextfieldsandLabels(this,fieldList,jl);
 		
 		
 		this.add(saveb);
@@ -110,9 +126,9 @@ public class MockGUI extends JFrame implements ActionListener {
 	
 	
 	//adding an array of JTextFields to a JFrame
-	public void addingTextfieldsandLabels(JFrame jf){
-		JTextField[] fieldList = new JTextField[8];
-		JLabel[] jl = new JLabel[8];
+	public void addingTextfieldsandLabels(JFrame jf, JTextField[] fieldList, JLabel[] jl){
+		//JTextField[] fieldList = new JTextField[8];
+		//JLabel[] jl = new JLabel[8];
 		int y=10;
 		
 		for(int i=0;i<fieldList.length;i++){
