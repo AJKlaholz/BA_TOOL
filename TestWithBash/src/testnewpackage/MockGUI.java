@@ -1,6 +1,7 @@
 package testnewpackage;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
@@ -12,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class MockGUI extends JFrame implements ActionListener {
 	private JButton saveb = new JButton();
@@ -49,12 +51,20 @@ public class MockGUI extends JFrame implements ActionListener {
 		
 		saveb.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent ev){
-			
 			Record tmp = new Record();
+			ArrayList<Searchterm> listofsterm = new ArrayList<Searchterm>();
 			tmp.setName(fieldList[0].getText());
-			System.out.println(fieldList[0].getText());
-			listofrec.add(tmp);
 			
+			for(int i=1;i<fieldList.length;i++){
+				Searchterm searchtmp = new Searchterm();
+				searchtmp.setName(fieldList[i].getText());;
+				listofsterm.add(searchtmp);
+			
+			
+			
+			}
+			tmp.setListofsterm(listofsterm);
+			listofrec.add(tmp);
 			//add Object to JComboBox
 			cm.addItem(fieldList[0].getText());
 			
@@ -72,8 +82,30 @@ public class MockGUI extends JFrame implements ActionListener {
 	
 		loadb.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
-				for(int i=0;i<listofrec.size();i++){
-				System.out.println(listofrec.get(i).getName());
+				//Load selected record from JComboBox to JTextField.
+				//Don't cast to record. Need to iterate on listofrec to get 
+				//selected record
+				Object selcObj= cm.getSelectedItem();
+				Record selcRec= new Record();
+				String ObjtoString = selcObj.toString();
+				
+				for(int i=0; i<listofrec.size();i++){
+					if(listofrec.get(i).getName().contains(ObjtoString)){
+						selcRec=listofrec.get(i);
+					}else{
+						System.out.println("FALE");
+					}
+				}
+			
+			
+				fieldList[0].setEditable(true);
+				fieldList[0].requestFocus();
+				fieldList[0].setText(selcRec.getName());
+				
+				
+			for(int i=1;i<fieldList.length;i++){
+					fieldList[i].setText(selcRec.getListofsterm().get(i-1).getName());
+				
 				}
 				
 				JFrame f = new JFrame();

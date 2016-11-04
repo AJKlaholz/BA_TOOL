@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Record {
 	private String name;
-	//private ArrayList<Searchterm> listofsterm;
+	private ArrayList<Searchterm> listofsterm;
 	
 	public String getName() {
 		return name;
@@ -12,12 +12,12 @@ public class Record {
 	public void setName(String name) {
 		this.name = name;
 	}
-	/*public ArrayList<Searchterm> getListofsterm() {
+	public ArrayList<Searchterm> getListofsterm() {
 		return listofsterm;
 	}
 	public void setListofsterm(ArrayList<Searchterm> listofsterm) {
 		this.listofsterm = listofsterm;
 	}
-	*/
+	
 
 }
