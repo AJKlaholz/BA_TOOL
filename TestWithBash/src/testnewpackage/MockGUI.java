@@ -4,9 +4,12 @@ import java.awt.FlowLayout;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -121,6 +124,19 @@ public class MockGUI extends JFrame implements ActionListener {
 				JFrame f = new JFrame();
 				JLabel sB = new JLabel("Object was deleted");
 				f.add(sB);
+				f.pack();
+				f.setLocationRelativeTo(null);
+				f.setVisible(true);	
+				}
+			});
+		
+		resultb.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ev){
+				JFrame f = new JFrame();
+				ImageIcon ii = new ImageIcon(getClass().getResource("Ausgabegrafik.png"));
+				JLabel picture = new JLabel(ii);
+				
+				f.add(picture);
 				f.pack();
 				f.setLocationRelativeTo(null);
 				f.setVisible(true);	
