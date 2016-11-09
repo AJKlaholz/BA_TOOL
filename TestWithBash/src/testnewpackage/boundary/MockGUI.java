@@ -6,6 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -19,6 +25,8 @@ import javax.swing.JTextField;
 import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class MockGUI extends JFrame implements ActionListener {
+	Connection dbConnection = null;
+	
 	private JButton saveb = new JButton();
 	private JButton loadb = new JButton();
 	private JButton deleteb = new JButton();
@@ -26,7 +34,6 @@ public class MockGUI extends JFrame implements ActionListener {
 	private JButton resultb = new JButton();
 	private JComboBox cm = new JComboBox();
 	
-	private ArrayList<Record> listofrec = new ArrayList<Record>();
 	
 	JTextField[] fieldList = new JTextField[8];
 	JLabel[] jl = new JLabel[8];
@@ -52,22 +59,68 @@ public class MockGUI extends JFrame implements ActionListener {
 		resultb.setBounds(620, 300, 100, 30);
 		cm.setBounds(260, 300, 100, 30);
 		
+		
+		
+		addAllRecordnamesToComboBox(dbConnection, cm);
+		
+		
+		
+		
 		saveb.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent ev){
-			Record tmp = new Record();
-			ArrayList<Searchterm> listofsterm = new ArrayList<Searchterm>();
-			tmp.setName(fieldList[0].getText());
+
+			//INSERT INTO RECORD DATABASE
 			
-			for(int i=1;i<fieldList.length;i++){
-				Searchterm searchtmp = new Searchterm();
-				searchtmp.setName(fieldList[i].getText());;
-				listofsterm.add(searchtmp);
-			
-			
-			
+		
+			PreparedStatement preparedStatement = null;
+
+			String insertTableSQL = "INSERT INTO record"
+					+ "(Recordname, Searchterm1, Searchterm2, Searchterm3, Searchterm4, Searchterm5, Searchterm6, Searchterm7) VALUES"
+					+ "(?,?,?,?,?,?,?,?)";
+
+			try {
+				dbConnection = DriverManager.getConnection("jdbc:sqlite:sample.de");
+				preparedStatement = dbConnection.prepareStatement(insertTableSQL);
+
+				for (int i=1;i<fieldList.length;i++){
+				preparedStatement.setString(i, fieldList[i-1].getText());
+
+				}
+				// execute insert SQL stetement
+				preparedStatement.executeUpdate();
+
+				System.out.println("Record is inserted into DBUSER table!");
+
+			} catch (SQLException e) {
+
+				System.out.println(e.getMessage());
+
+			} finally {
+
+				if (preparedStatement != null) {
+					try {
+						preparedStatement.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+				if (dbConnection != null) {
+					try {
+						dbConnection.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
 			}
-			tmp.setListofsterm(listofsterm);
-			listofrec.add(tmp);
+			
+			//INSERT END
+
+			
+			
 			//add Object to JComboBox
 			cm.addItem(fieldList[0].getText());
 			
@@ -91,7 +144,77 @@ public class MockGUI extends JFrame implements ActionListener {
 				Object selcObj= cm.getSelectedItem();
 				Record selcRec= new Record();
 				String ObjtoString = selcObj.toString();
+				ArrayList<Searchterm> lst = new ArrayList<Searchterm>(7);
 				
+				
+				
+				//Statement preparedStatement = null;
+
+				
+
+				try {
+					dbConnection = DriverManager.getConnection("jdbc:sqlite:sample.de");
+					Statement preparedStatement = dbConnection.createStatement();
+					ResultSet selectAllRecords = preparedStatement.executeQuery("SELECT * FROM record WHERE Recordname='"+ObjtoString+"'");
+					while(selectAllRecords.next()){
+						selcRec.setName(selectAllRecords.getString("Recordname"));
+					for(int i=1;i<fieldList.length;i++){
+						Searchterm tmp = new Searchterm();
+						tmp.setName(selectAllRecords.getString("Searchterm"+i));
+						System.out.println(tmp.getName());
+						lst.add(tmp);
+						
+					}
+					
+					}
+					selcRec.setListofsterm(lst);
+				
+
+				} catch (SQLException e) {
+
+					System.out.println(e.getMessage());
+
+				} finally {
+
+				
+					}
+
+					if (dbConnection != null) {
+						try {
+							dbConnection.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				
+				
+				
+				
+				
+				
+					
+				
+				
+				
+		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			/*	
 				for(int i=0; i<listofrec.size();i++){
 					if(listofrec.get(i).getName().contains(ObjtoString)){
 						selcRec=listofrec.get(i);
@@ -99,7 +222,7 @@ public class MockGUI extends JFrame implements ActionListener {
 						System.out.println("FALE");
 					}
 				}
-			
+			*/
 			
 				fieldList[0].setEditable(true);
 				fieldList[0].requestFocus();
@@ -121,6 +244,71 @@ public class MockGUI extends JFrame implements ActionListener {
 			});
 		deleteb.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
+				
+				
+				
+				
+				
+				
+				
+				//DELETE  RECORD  FROM DATABASE
+				
+				
+				Statement preparedStatement = null;
+
+				String deleteFromTableSQL = "DELETE FROM record WHERE Recordname='"+ fieldList[0].getText() +"'" ;
+
+				try {
+					dbConnection = DriverManager.getConnection("jdbc:sqlite:sample.de");
+					preparedStatement = dbConnection.createStatement();
+
+					
+					// execute insert SQL stetement
+					preparedStatement.execute(deleteFromTableSQL);
+
+					System.out.println("Record was deleted!");
+
+				} catch (SQLException e) {
+
+					System.out.println(e.getMessage());
+
+				} finally {
+
+					if (preparedStatement != null) {
+						try {
+							preparedStatement.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+
+					if (dbConnection != null) {
+						try {
+							dbConnection.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+
+				}
+				
+				//DELETE END
+				
+				
+				
+				cm.removeItemAt(cm.getSelectedIndex());
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				JFrame f = new JFrame();
 				JLabel sB = new JLabel("Object was deleted");
 				f.add(sB);
@@ -145,13 +333,7 @@ public class MockGUI extends JFrame implements ActionListener {
 		
 		
 		this.setLayout(null);
-	/*	JTextField jt = new JTextField(30);
-		//this.getContentPane().add(jt);
-		this.add(jt);
-		  jt.setBounds(10,10,80,30);
-	      jt.setVisible(true);
-	      jt.addActionListener(this);
-		*/
+
 		
 		
 		addingTextfieldsandLabels(this,fieldList,jl);
@@ -170,6 +352,7 @@ public class MockGUI extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
+		//new SQLliteSample();
 		new MockGUI();
 	}
 
@@ -183,8 +366,6 @@ public class MockGUI extends JFrame implements ActionListener {
 	
 	//adding an array of JTextFields to a JFrame
 	public void addingTextfieldsandLabels(JFrame jf, JTextField[] fieldList, JLabel[] jl){
-		//JTextField[] fieldList = new JTextField[8];
-		//JLabel[] jl = new JLabel[8];
 		int y=10;
 		
 		for(int i=0;i<fieldList.length;i++){
@@ -207,5 +388,37 @@ public class MockGUI extends JFrame implements ActionListener {
 			
 		}
 	}
+	public void addAllRecordnamesToComboBox(Connection con, JComboBox cm){
+		try {
+			dbConnection = DriverManager.getConnection("jdbc:sqlite:sample.de");
+			Statement preparedStatement = dbConnection.createStatement();
+			ResultSet selectAllRecords = preparedStatement.executeQuery("SELECT Recordname From record");
+			while(selectAllRecords.next()){
+				
+				cm.addItem(selectAllRecords.getString("Recordname"));
+			
+			}
+		
 
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+		
+			}
+
+			if (dbConnection != null) {
+				try {
+					dbConnection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+	}
+	
 }
+
+	
