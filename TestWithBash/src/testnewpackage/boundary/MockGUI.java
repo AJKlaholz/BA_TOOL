@@ -24,6 +24,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.html.HTMLDocument.Iterator;
 
+import testnewpackage.control.GPRecordManager;
+import testnewpackage.control.Record;
+import testnewpackage.control.Searchterm;
+
 public class MockGUI extends JFrame implements ActionListener {
 	Connection dbConnection = null;
 	
@@ -34,6 +38,7 @@ public class MockGUI extends JFrame implements ActionListener {
 	private JButton resultb = new JButton();
 	private JComboBox cm = new JComboBox();
 	
+
 	
 	JTextField[] fieldList = new JTextField[8];
 	JLabel[] jl = new JLabel[8];
@@ -60,8 +65,47 @@ public class MockGUI extends JFrame implements ActionListener {
 		cm.setBounds(260, 300, 100, 30);
 		
 		
+		//adds ALL items from database record to jcombobox
 		
-		addAllRecordnamesToComboBox(dbConnection, cm);
+	
+		//Statement preparedStatement = null;
+
+		
+
+		try {
+			dbConnection = DriverManager.getConnection("jdbc:sqlite:sample.de");
+			Statement preparedStatement = dbConnection.createStatement();
+			ResultSet selectAllRecords = preparedStatement.executeQuery("SELECT Recordname From record");
+			while(selectAllRecords.next()){
+				
+				cm.addItem(selectAllRecords.getString("Recordname"));
+			
+			}
+		
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+		
+			}
+
+			if (dbConnection != null) {
+				try {
+					dbConnection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		
+		
+		
+		
+		
+		
 		
 		
 		
@@ -71,54 +115,25 @@ public class MockGUI extends JFrame implements ActionListener {
 
 			//INSERT INTO RECORD DATABASE
 			
-		
-			PreparedStatement preparedStatement = null;
-
-			String insertTableSQL = "INSERT INTO record"
-					+ "(Recordname, Searchterm1, Searchterm2, Searchterm3, Searchterm4, Searchterm5, Searchterm6, Searchterm7) VALUES"
-					+ "(?,?,?,?,?,?,?,?)";
-
-			try {
-				dbConnection = DriverManager.getConnection("jdbc:sqlite:sample.de");
-				preparedStatement = dbConnection.prepareStatement(insertTableSQL);
-
-				for (int i=1;i<fieldList.length;i++){
-				preparedStatement.setString(i, fieldList[i-1].getText());
-
-				}
-				// execute insert SQL stetement
-				preparedStatement.executeUpdate();
-
-				System.out.println("Record is inserted into DBUSER table!");
-
-			} catch (SQLException e) {
-
-				System.out.println(e.getMessage());
-
-			} finally {
-
-				if (preparedStatement != null) {
-					try {
-						preparedStatement.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
-				if (dbConnection != null) {
-					try {
-						dbConnection.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
+			GPRecordManager rp = new GPRecordManager();
+			Record al = new Record();
+			ArrayList <Searchterm> ast = new ArrayList();
+			al.setName(fieldList[0].getText());
+			for(int i=1;i<fieldList.length;i++){
+				Searchterm st = new Searchterm();
+				st.setName(fieldList[i].getText());
+				ast.add(st);
+				
 			}
 			
-			//INSERT END
-
+			al.setListofsterm(ast);
+			rp.setRecord(al);
+			
+			
+			
+			
+			
+			
 			
 			
 			//add Object to JComboBox
@@ -142,95 +157,16 @@ public class MockGUI extends JFrame implements ActionListener {
 				//Don't cast to record. Need to iterate on listofrec to get 
 				//selected record
 				Object selcObj= cm.getSelectedItem();
-				Record selcRec= new Record();
 				String ObjtoString = selcObj.toString();
-				ArrayList<Searchterm> lst = new ArrayList<Searchterm>(7);
+				GPRecordManager rm = new GPRecordManager();
 				
-				
-				
-				//Statement preparedStatement = null;
+				Record tmp = rm.getRecord(ObjtoString);
 
+				fieldList[0].setText(tmp.getName());
 				
-
-				try {
-					dbConnection = DriverManager.getConnection("jdbc:sqlite:sample.de");
-					Statement preparedStatement = dbConnection.createStatement();
-					ResultSet selectAllRecords = preparedStatement.executeQuery("SELECT * FROM record WHERE Recordname='"+ObjtoString+"'");
-					while(selectAllRecords.next()){
-						selcRec.setName(selectAllRecords.getString("Recordname"));
-					for(int i=1;i<fieldList.length;i++){
-						Searchterm tmp = new Searchterm();
-						tmp.setName(selectAllRecords.getString("Searchterm"+i));
-						System.out.println(tmp.getName());
-						lst.add(tmp);
-						
-					}
-					
-					}
-					selcRec.setListofsterm(lst);
+			for(int i=1;i<7;i++){
 				
-
-				} catch (SQLException e) {
-
-					System.out.println(e.getMessage());
-
-				} finally {
-
-				
-					}
-
-					if (dbConnection != null) {
-						try {
-							dbConnection.close();
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				
-				
-				
-				
-				
-				
-					
-				
-				
-				
-		
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			/*	
-				for(int i=0; i<listofrec.size();i++){
-					if(listofrec.get(i).getName().contains(ObjtoString)){
-						selcRec=listofrec.get(i);
-					}else{
-						System.out.println("FALE");
-					}
-				}
-			*/
-			
-				fieldList[0].setEditable(true);
-				fieldList[0].requestFocus();
-				fieldList[0].setText(selcRec.getName());
-				
-				
-			for(int i=1;i<fieldList.length;i++){
-					fieldList[i].setText(selcRec.getListofsterm().get(i-1).getName());
+					fieldList[i].setText(tmp.getListOfSTerm().get(i-1).getName());
 				
 				}
 				
@@ -244,68 +180,9 @@ public class MockGUI extends JFrame implements ActionListener {
 			});
 		deleteb.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
-				
-				
-				
-				
-				
-				
-				
-				//DELETE  RECORD  FROM DATABASE
-				
-				
-				Statement preparedStatement = null;
-
-				String deleteFromTableSQL = "DELETE FROM record WHERE Recordname='"+ fieldList[0].getText() +"'" ;
-
-				try {
-					dbConnection = DriverManager.getConnection("jdbc:sqlite:sample.de");
-					preparedStatement = dbConnection.createStatement();
-
-					
-					// execute insert SQL stetement
-					preparedStatement.execute(deleteFromTableSQL);
-
-					System.out.println("Record was deleted!");
-
-				} catch (SQLException e) {
-
-					System.out.println(e.getMessage());
-
-				} finally {
-
-					if (preparedStatement != null) {
-						try {
-							preparedStatement.close();
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-					if (dbConnection != null) {
-						try {
-							dbConnection.close();
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-				}
-				
-				//DELETE END
-				
-				
-				
+				GPRecordManager rm = new GPRecordManager();
+				rm.deleteRecord((String)cm.getSelectedItem());
 				cm.removeItemAt(cm.getSelectedIndex());
-				
-				
-				
-				
-				
-				
-				
 				
 				
 				
@@ -334,8 +211,6 @@ public class MockGUI extends JFrame implements ActionListener {
 		
 		this.setLayout(null);
 
-		
-		
 		addingTextfieldsandLabels(this,fieldList,jl);
 		
 		
@@ -366,6 +241,8 @@ public class MockGUI extends JFrame implements ActionListener {
 	
 	//adding an array of JTextFields to a JFrame
 	public void addingTextfieldsandLabels(JFrame jf, JTextField[] fieldList, JLabel[] jl){
+		//JTextField[] fieldList = new JTextField[8];
+		//JLabel[] jl = new JLabel[8];
 		int y=10;
 		
 		for(int i=0;i<fieldList.length;i++){
@@ -388,37 +265,5 @@ public class MockGUI extends JFrame implements ActionListener {
 			
 		}
 	}
-	public void addAllRecordnamesToComboBox(Connection con, JComboBox cm){
-		try {
-			dbConnection = DriverManager.getConnection("jdbc:sqlite:sample.de");
-			Statement preparedStatement = dbConnection.createStatement();
-			ResultSet selectAllRecords = preparedStatement.executeQuery("SELECT Recordname From record");
-			while(selectAllRecords.next()){
-				
-				cm.addItem(selectAllRecords.getString("Recordname"));
-			
-			}
-		
 
-		} catch (SQLException e) {
-
-			System.out.println(e.getMessage());
-
-		} finally {
-
-		
-			}
-
-			if (dbConnection != null) {
-				try {
-					dbConnection.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-	}
-	
 }
-
-	

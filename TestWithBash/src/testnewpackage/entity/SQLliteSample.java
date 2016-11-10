@@ -1,4 +1,4 @@
-package testnewpackage.boundary;
+package testnewpackage.entity;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

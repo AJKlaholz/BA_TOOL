@@ -1,4 +1,4 @@
-package testnewpackage.boundary;
+package testnewpackage.control;
 
 public class Searchterm {
 	private String name;
