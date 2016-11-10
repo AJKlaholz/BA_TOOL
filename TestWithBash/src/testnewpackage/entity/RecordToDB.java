@@ -154,4 +154,41 @@ public class RecordToDB {
 		
 		//DELETE END
 	}
+
+
+	public ArrayList<String> pullAllRecordnamesFromDb(){
+		ArrayList<String> ard = new ArrayList<String> ();
+		
+		try {
+			dbConnection = DriverManager.getConnection("jdbc:sqlite:sample.de");
+			Statement preparedStatement = dbConnection.createStatement();
+			ResultSet selectAllRecords = preparedStatement.executeQuery("SELECT Recordname From record");
+			while(selectAllRecords.next()){
+				
+				ard.add((selectAllRecords.getString("Recordname")));
+			
+			}
+		
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+		
+			}
+
+			if (dbConnection != null) {
+				try {
+					dbConnection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		
+		
+		return ard;
+	}
 }

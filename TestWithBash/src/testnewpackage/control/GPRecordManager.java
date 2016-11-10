@@ -38,10 +38,16 @@ public class GPRecordManager {
 			
 			
 		}
-
 		
 		public void deleteRecord(String ds){
 			RecordToDB rtdb = new RecordToDB();
 			rtdb.deleteRecordFromDb(ds);
+		}
+		
+		public ArrayList<String> getAllRecordnames(){
+			RecordToDB rtdb = new RecordToDB();
+			
+			
+			return rtdb.pullAllRecordnamesFromDb();
 		}
 }

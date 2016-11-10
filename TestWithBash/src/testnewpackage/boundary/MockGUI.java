@@ -70,41 +70,11 @@ public class MockGUI extends JFrame implements ActionListener {
 	
 		//Statement preparedStatement = null;
 
-		
-
-		try {
-			dbConnection = DriverManager.getConnection("jdbc:sqlite:sample.de");
-			Statement preparedStatement = dbConnection.createStatement();
-			ResultSet selectAllRecords = preparedStatement.executeQuery("SELECT Recordname From record");
-			while(selectAllRecords.next()){
-				
-				cm.addItem(selectAllRecords.getString("Recordname"));
+		GPRecordManager rm = new GPRecordManager();
 			
-			}
-		
-
-		} catch (SQLException e) {
-
-			System.out.println(e.getMessage());
-
-		} finally {
-
-		
-			}
-
-			if (dbConnection != null) {
-				try {
-					dbConnection.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		
-		
-		
-		
-		
+		for(int i=0; i<rm.getAllRecordnames().size();i++){
+			cm.addItem(rm.getAllRecordnames().get(i));
+		}
 		
 		
 		
