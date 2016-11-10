@@ -17,8 +17,6 @@ public class Record {
 		this.name=s;
 		
 	}
-	
-	
 
 	public void setListofsterm(ArrayList<Searchterm> listofsterm) {
 		this.listofsterm = listofsterm;

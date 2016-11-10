@@ -1,29 +1,17 @@
 package testnewpackage.boundary;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.text.html.HTMLDocument.Iterator;
-
 import testnewpackage.control.GPRecordManager;
 import testnewpackage.control.Record;
 import testnewpackage.control.Searchterm;
@@ -36,7 +24,7 @@ public class MockGUI extends JFrame implements ActionListener {
 	private JButton deleteb = new JButton();
 	private JButton downloadb = new JButton();
 	private JButton resultb = new JButton();
-	private JComboBox cm = new JComboBox();
+	private JComboBox<String> cm = new JComboBox<String>();
 	
 
 	
@@ -66,19 +54,11 @@ public class MockGUI extends JFrame implements ActionListener {
 		
 		
 		//adds ALL items from database record to jcombobox
-		
-	
-		//Statement preparedStatement = null;
-
 		GPRecordManager rm = new GPRecordManager();
 			
 		for(int i=0; i<rm.getAllRecordnames().size();i++){
 			cm.addItem(rm.getAllRecordnames().get(i));
 		}
-		
-		
-		
-		
 		
 		saveb.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent ev){
@@ -87,7 +67,7 @@ public class MockGUI extends JFrame implements ActionListener {
 			
 			GPRecordManager rp = new GPRecordManager();
 			Record al = new Record();
-			ArrayList <Searchterm> ast = new ArrayList();
+			ArrayList <Searchterm> ast = new ArrayList<Searchterm>();
 			al.setName(fieldList[0].getText());
 			for(int i=1;i<fieldList.length;i++){
 				Searchterm st = new Searchterm();
@@ -99,26 +79,10 @@ public class MockGUI extends JFrame implements ActionListener {
 			al.setListofsterm(ast);
 			rp.setRecord(al);
 			
-			
-			
-			
-			
-			
-			
-			
 			//add Object to JComboBox
 			cm.addItem(fieldList[0].getText());
-			
-			
-			
-			
-			JFrame f = new JFrame();
-			JLabel sB = new JLabel("Object was saved");
-			f.add(sB);
-			f.pack();
-			f.setLocationRelativeTo(null);
-			f.setVisible(true);	
-			}
+		
+		}
 		});
 	
 		loadb.addActionListener(new ActionListener(){
@@ -140,31 +104,17 @@ public class MockGUI extends JFrame implements ActionListener {
 				
 				}
 				
-				JFrame f = new JFrame();
-				JLabel sB = new JLabel("Object was loaded");
-				f.add(sB);
-				f.pack();
-				f.setLocationRelativeTo(null);
-				f.setVisible(true);	
 				}
 			});
+		
 		deleteb.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
 				GPRecordManager rm = new GPRecordManager();
 				rm.deleteRecord((String)cm.getSelectedItem());
 				cm.removeItemAt(cm.getSelectedIndex());
-				
-				
-				
-				JFrame f = new JFrame();
-				JLabel sB = new JLabel("Object was deleted");
-				f.add(sB);
-				f.pack();
-				f.setLocationRelativeTo(null);
-				f.setVisible(true);	
 				}
 			});
-		
+
 		resultb.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
 				JFrame f = new JFrame();
@@ -211,8 +161,6 @@ public class MockGUI extends JFrame implements ActionListener {
 	
 	//adding an array of JTextFields to a JFrame
 	public void addingTextfieldsandLabels(JFrame jf, JTextField[] fieldList, JLabel[] jl){
-		//JTextField[] fieldList = new JTextField[8];
-		//JLabel[] jl = new JLabel[8];
 		int y=10;
 		
 		for(int i=0;i<fieldList.length;i++){
