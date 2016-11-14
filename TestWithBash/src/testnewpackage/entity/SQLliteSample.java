@@ -28,7 +28,7 @@ public class SQLliteSample {
 		         statement.executeUpdate("DROP TABLE IF EXISTS record");
 		         statement.executeUpdate("CREATE TABLE record (Recordname STRING not null, Searchterm1 STRING,"
 		         		+ " Searchterm2 STRING, Searchterm3 STRING, Searchterm4 STRING,"
-		         		+ " Searchterm5 STRING, Searchterm6 STRING, Searchterm7 STRING)");
+		         		+ " Searchterm5 STRING)");
 		         /*
 		         int ids [] = {1,2,3,4,5};
 		         String names [] = {"Peter","Pallar","William","Paul","James Bond"};

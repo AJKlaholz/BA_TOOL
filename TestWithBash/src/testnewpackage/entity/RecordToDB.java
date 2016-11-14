@@ -26,8 +26,9 @@ public class RecordToDB {
 			
 			while(selectAllRecords.next()){
 				tmp.add(selectAllRecords.getString("Recordname"));
-				for(int i=1;i<=7;i++){
+				for(int i=1;i<=5;i++){
 				tmp.add(selectAllRecords.getString("Searchterm"+i));
+				System.out.println(selectAllRecords.getString("Searchterm"+i));
 				}
 				
 			}
@@ -65,16 +66,16 @@ public class RecordToDB {
 		PreparedStatement preparedStatement = null;
 
 		String insertTableSQL = "INSERT INTO record"
-				+ "(Recordname, Searchterm1, Searchterm2, Searchterm3, Searchterm4, Searchterm5, Searchterm6, Searchterm7) VALUES"
-				+ "(?,?,?,?,?,?,?,?)";
+				+ "(Recordname, Searchterm1, Searchterm2, Searchterm3, Searchterm4, Searchterm5) VALUES"
+				+ "(?,?,?,?,?,?)";
 
 		try {
 			dbConnection = DriverManager.getConnection("jdbc:sqlite:sample.de");
 			preparedStatement = dbConnection.prepareStatement(insertTableSQL);
 
-			for (int i=1;i<rsql.size();i++){
+			for (int i=1;i<=rsql.size();i++){
 			preparedStatement.setString(i, rsql.get(i-1));
-
+			System.out.println(rsql.get(i-1));
 			}
 			// execute insert SQL stetement
 			preparedStatement.executeUpdate();

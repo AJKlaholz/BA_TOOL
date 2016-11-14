@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import testnewpackage.control.GPRecordManager;
 import testnewpackage.control.Record;
 import testnewpackage.control.Searchterm;
+import testnewpackage.entity.SQLliteSample;
 
 public class MockGUI extends JFrame implements ActionListener {
 	Connection dbConnection = null;
@@ -28,8 +29,8 @@ public class MockGUI extends JFrame implements ActionListener {
 	
 
 	
-	JTextField[] fieldList = new JTextField[8];
-	JLabel[] jl = new JLabel[8];
+	JTextField[] fieldList = new JTextField[6];
+	JLabel[] jl = new JLabel[6];
 
 	
 	public MockGUI(){
@@ -73,7 +74,7 @@ public class MockGUI extends JFrame implements ActionListener {
 				Searchterm st = new Searchterm();
 				st.setName(fieldList[i].getText());
 				ast.add(st);
-				
+				System.out.println("Test");
 			}
 			
 			al.setListofsterm(ast);
@@ -98,12 +99,18 @@ public class MockGUI extends JFrame implements ActionListener {
 
 				fieldList[0].setText(tmp.getName());
 				
-			for(int i=1;i<7;i++){
+			for(int i=1;i<6;i++){
 				
 					fieldList[i].setText(tmp.getListOfSTerm().get(i-1).getName());
 				
 				}
-				
+
+			ArrayList<String> listtoTb = new ArrayList<String>();
+			for(int i=0;i<5;i++){
+				listtoTb.add(tmp.getListOfSTerm().get(i).getName());
+			
+			}
+				PrintTable.print(listtoTb);
 				}
 			});
 		

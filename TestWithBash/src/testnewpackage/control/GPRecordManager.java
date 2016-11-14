@@ -23,7 +23,7 @@ public class GPRecordManager {
 			Record lr = new Record();
 			ArrayList<Searchterm> als = new ArrayList<Searchterm>();
 			RecordToDB rdb = new RecordToDB();
-			ArrayList <String> tmp = new ArrayList <String>(8);
+			ArrayList <String> tmp = new ArrayList <String>(6);
 			tmp = rdb.pullRecordFromDb(s);
 			lr.setName(tmp.get(0));
 			
