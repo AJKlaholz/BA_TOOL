@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import testnewpackage.control.GPRecordManager;
+import testnewpackage.control.PrintTable;
 import testnewpackage.control.Record;
 import testnewpackage.control.Searchterm;
 import testnewpackage.entity.SQLliteSample;

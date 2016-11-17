@@ -24,7 +24,7 @@ public class RecordToDB {
 			ResultSet selectAllRecords = preparedStatement.executeQuery("SELECT * FROM record WHERE Recordname='"+s+"'");
 			
 			
-			while(selectAllRecords.next()){
+			if(selectAllRecords.next()){
 				tmp.add(selectAllRecords.getString("Recordname"));
 				for(int i=1;i<=5;i++){
 				tmp.add(selectAllRecords.getString("Searchterm"+i));

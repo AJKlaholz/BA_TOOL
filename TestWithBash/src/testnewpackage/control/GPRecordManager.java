@@ -28,7 +28,6 @@ public class GPRecordManager {
 			lr.setName(tmp.get(0));
 			
 			for(int i=1;i<tmp.size();i++){
-				System.out.println(tmp.get(i));
 				Searchterm st = new Searchterm();
 				st.setName(tmp.get(i));
 				als.add(st);

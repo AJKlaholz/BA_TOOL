@@ -1,4 +1,4 @@
-package testnewpackage.boundary;
+package testnewpackage.control;
 
 
 import java.io.BufferedWriter;
@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import testnewpackage.boundary.Command;
 
 
 
@@ -60,7 +62,7 @@ public class PrintTable {
 		
 		Command c = new Command("C:\\Users\\Adrian\\Documents\\pytrends-master\\examples");
 		try {
-			c.exec("py testjava.py");
+			c.exec("py testjava.py > table.txt");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
