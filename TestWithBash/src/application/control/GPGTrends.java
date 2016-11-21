@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -20,6 +22,12 @@ public class GPGTrends {
 	public static Record parsDataFromJavaIntoRecord(Record re){
 			
 		try {
+			   Collections.sort(re.getListOfSTerm(), new Comparator<Searchterm>() {
+			        @Override
+			        public int compare(Searchterm s1, Searchterm s2) {
+			            return s1.getName().compareToIgnoreCase(s2.getName());
+			        }
+			    });
 			Scanner sc = new Scanner(new File("C:\\Users\\Adrian\\Documents\\pytrends-master\\examples\\table.txt"));
 			sc.nextLine();
 			sc.nextLine();
