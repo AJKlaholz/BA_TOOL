@@ -1,4 +1,4 @@
-package testnewpackage.control;
+package application.control;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,24 +7,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
-import testnewpackage.boundary.Command;
+import application.boundary.Command;
 
 public class GPGTrends {
-	/*public static void main(String[] args){
-		GPRecordManager rm = new GPRecordManager();
-		GPGTrends.parsDataFromJavaIntoRecord(rm.getRecord("blizzard"));
-	}*/
+//	public static void main(String[] args){
+//		GPRecordManager rm = new GPRecordManager();
+//		GPGTrends.parsDataFromJavaIntoRecord(rm.getRecord("blizzard"));
+//	}
 	public static Record parsDataFromJavaIntoRecord(Record re){
 			
 		try {
 			Scanner sc = new Scanner(new File("C:\\Users\\Adrian\\Documents\\pytrends-master\\examples\\table.txt"));
 			sc.nextLine();
 			sc.nextLine();
-			while(sc.hasNextLine()){
+			while(sc.hasNext()){
 				String sdate = sc.next();
 				String year = "";
 				String month = "";
@@ -40,12 +39,13 @@ public class GPGTrends {
 					
 					
 				}
-				Date d =new Date(Integer.parseInt(year)-1900,Integer.parseInt(month)-1,Integer.parseInt(day));
+				
+				Date d =new Date(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
 				
 				for(int i=0;i<re.getListOfSTerm().size();i++){
-				
-					re.getListOfSTerm().get(i).addDateAndPopularity(d, Double.parseDouble(sc.next()));
 					
+				re.getListOfSTerm().get(i).addDateAndPopularity(d, Double.parseDouble(sc.next()));
+				
 				
 				}
 				

@@ -1,4 +1,4 @@
-package testnewpackage.boundary;
+package application.boundary;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -6,17 +6,18 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import testnewpackage.control.GPRecordManager;
-import testnewpackage.control.PrintTable;
-import testnewpackage.control.Record;
-import testnewpackage.control.Searchterm;
-import testnewpackage.entity.SQLliteSample;
+
+import org.jfree.ui.RefineryUtilities;
+
+import application.control.GPRecordManager;
+import application.control.PrintTable;
+import application.control.Record;
+import application.control.Searchterm;
 
 public class MockGUI extends JFrame implements ActionListener {
 	Connection dbConnection = null;
@@ -125,14 +126,19 @@ public class MockGUI extends JFrame implements ActionListener {
 
 		resultb.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev){
-				JFrame f = new JFrame();
-				ImageIcon ii = new ImageIcon(getClass().getResource("Ausgabegrafik.png"));
-				JLabel picture = new JLabel(ii);
+			
 				
-				f.add(picture);
-				f.pack();
-				f.setLocationRelativeTo(null);
-				f.setVisible(true);	
+			     LineChart_AWT chart = new LineChart_AWT(
+			    	      "Corelation" ,
+			    	      "correlation between searchterms and product", fieldList[0].getText());
+
+			    	      chart.pack( );
+			    	      RefineryUtilities.centerFrameOnScreen( chart );
+			    	      chart.setVisible( true );
+				
+				
+				
+				
 				}
 			});
 		

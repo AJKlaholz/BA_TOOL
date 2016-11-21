@@ -1,4 +1,4 @@
-package testnewpackage.entity;
+package application.entity;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

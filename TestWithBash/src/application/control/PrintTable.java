@@ -1,4 +1,4 @@
-package testnewpackage.control;
+package application.control;
 
 
 import java.io.BufferedWriter;
@@ -7,9 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
-
-import testnewpackage.boundary.Command;
+import application.boundary.Command;
 
 
 

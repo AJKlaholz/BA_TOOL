@@ -1,8 +1,8 @@
-package testnewpackage.control;
+package application.control;
 
 import java.util.ArrayList;
 
-import testnewpackage.entity.RecordToDB;
+import application.entity.RecordToDB;
 
 
 

@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="F:/Adrian2/Downloads/sqlite-jdbc-3.15.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Adrian/Documents/poi-3.15/poi-3.15.jar"/>
+	<classpathentry kind="lib" path="F:/Adrian2/Dokumente/jfreechart-1.0.19/jfreechart-1.0.19-demo.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
