@@ -1,0 +1,136 @@
+import socks
+import socket
+import sys
+
+
+import requests
+from bs4 import BeautifulSoup
+
+from stem import Signal
+from stem.control import Controller
+
+from pytrends.request import TrendReq 
+import time
+from random import randint
+
+#controller = Controller.from_port(port=9051)
+
+
+
+def connectTor():
+    
+	socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5 , "127.0.0.1", 9050, True)
+    
+	socket.socket = socks.socksocket
+
+
+def renew_connection():
+    
+    with Controller.from_port(port = 9051) as controller:
+        controller.authenticate()
+        controller.signal(Signal.NEWNYM)
+        controller.close()
+ 
+	
+	
+def renew_tor():
+	socks.setdefaultproxy()
+	
+	s = socket.socket(socket.AF_INET , socket.SOCK_STREAM)
+	
+	s.connect(("127.0.0.1",9051))
+	
+	var1 = "AUTHENTICATE\r\n"
+	
+	s.send(var1.encode(encoding='utf_8'))
+	
+	response = s.recv(128)
+	
+	var3 = "250"
+	
+	if response.startswith(var3.encode(encoding='utf_8')):
+		var2 = "SIGNAL NEWNYM\r\n"
+		s.send(var2.encode(encoding='utf_8'))
+    #controller.authenticate()
+    #controller.signal(Signal.NEWNYM)
+	
+	s.close()
+	
+	"""
+	var1 = "127.0.0.1"
+	var2 = "9051"
+	var3 = "AUTHENTICATE "
+	var4 = "\r\nSIGNAL NEWNYM\r\n"
+
+	try:
+		tor_c = socket.create_connection((var1.encode(encoding='utf_8'), var2.encode(encoding='utf_8')))
+		tor_c.send(var3.encode('utf_8') + b"{}" + var4.encode('utf_8').format(NULL))
+
+		response = tor_c.recv(1024)
+		if response != '250 OK\r\n250 OK\r\n':
+			sys.stderr.write('Unexpected response from Tor control port: {}\n'.format(response))
+			
+	except Exception as e:
+		sys.stderr.write('Error connecting to Tor control port: {}\n'.format(repr(e)))
+	
+	
+	"""
+	connectTor()
+
+def randomName(length):
+    import string
+    import random
+    return ''.join(random.choice(string.ascii_letters) for i in range(length))
+
+
+def showmyip():
+    url = "http://www.showmyip.gr/"
+    r = requests.Session()
+    page = r.get(url)
+    soup = BeautifulSoup(page.content, "lxml")
+    ip_address = soup.find("span",{"class":"ip_address"}).text.strip()
+    print(ip_address)
+	
+def tmpip():
+    url = "http://www.showmyip.gr/"
+    r = requests.Session()
+    page = r.get(url)
+    soup = BeautifulSoup(page.content, "lxml")
+    ip_address = soup.find("span",{"class":"ip_address"}).text.strip()
+    return (ip_address)
+    
+google_username = "atest12345.ktest@gmail.com" 
+google_password = "Zoxoduvu123"
+path = ""
+oldIP = "0.0.0.0"
+newIP = "0.0.0.0"
+oldIP = oldIP.encode(encoding='utf_8')
+newIP = newIP.encode(encoding='utf_8')
+tmpIP = "http://icanhazip.com/"
+tmpIP = tmpIP.encode(encoding='utf_8')
+connectTor()
+renew_tor()
+
+
+i = 1
+while (i <= int(sys.argv[1])):
+	try:
+		# connect to Google
+		pytrend = TrendReq(google_username, google_password, custom_useragent=randomName(randint(5,10)))
+		print(sys.argv[2])
+		print(sys.argv[3])
+		trend_payload = {'q': ''+ sys.argv[2] +'','date': ''+ sys.argv[3] +' 1m'} # 01/2015
+		# trend
+		trend = pytrend.trend(trend_payload)
+		#print(trend)
+		df = pytrend.trend(trend_payload, return_type='dataframe')
+		print(df)
+		i=i+1
+	except Exception:
+			oldIP=tmpip()
+			while (oldIP==tmpip()):
+				renew_tor()
+				showmyip()
+			time.sleep(30)
+			
+	
